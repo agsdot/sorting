@@ -31,11 +31,48 @@ def sortarray(x)
 end # def
 
 
-array = (1..10000).to_a.shuffle!
+array = (1..10).to_a.shuffle!
 # puts '--------------'
 
 puts sortarray(array)
 
+Benchmark.bmbm(10) do |bench|
+
+  n = 10
+  puts "N = #{n}"
+  ten = (1..10).map{rand(10_000)}
+  hundred = (1..100).map{rand(10_000)}
+  twohundred = (1..200).map{rand(10_000)}
+  threehundred = (1..300).map{rand(10_000)}
+
+  thousand = (1..1000).map{rand(10_000)}
+  five_thousand = (1..5000).map{rand(10_000)}
+
+  bench.report("ten") do
+    n.times{sortarray(ten)}
+  end
+
+  bench.report("hundred") do
+    n.times{sortarray(hundred)}
+  end
+
+  bench.report("twohundred") do
+    n.times{sortarray(twohundred)}
+  end
+
+  bench.report("threehundred") do
+    n.times{sortarray(threehundred)}
+  end
+
+  bench.report("thousand") do
+    n.times{sortarray(thousand)}
+  end
+
+  bench.report("five thousand") do
+    n.times{sortarray(five_thousand)}
+  end
+
+end
 
 
 describe "#sortarray" do
@@ -67,10 +104,4 @@ describe "#sortarray" do
 end
 
 
-    # it "pops off the last node of the list" do
-    #   list = List.new
-    #   list.push(5)
-    #   list.pop
-    #   expect(list.size).to eq 0
-    # end
 
